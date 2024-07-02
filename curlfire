@@ -1,29 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -o errexit
 set -o nounset
 set -o pipefail
 
-profile=default
-skip=
-args=()
-for var in "$@"; do
-    # Ignore known bad arguments
-    case "$var" in
-        -P)
-            skip=yes
-            ;;
-        *)
-          if [ -z "$skip" ]; then
-              args+=("$var")
-          else
-              profile=$var
-          fi;
-          skip=
-    esac;
-done
-
-
+profile=${1:-default}
 curlcookies="$(mktemp /tmp/curlcookies.XXXXXXXXXX)"
-cookiefire "$profile" > "$curlcookies"
-curl -b "$curlcookies" "${args[@]}" ;
+cookiefire $profile >"$curlcookies"
+curl -b "$curlcookies" "$@"
+rm "$curlcookies"
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+profile=${1:-${PROFILE:-jtm}}
+curlcookies="$(mktemp /tmp/curlcookies.XXXXXXXXXX)"
+cookiefire $profile >"$curlcookies"
+curl -b "$curlcookies" "$@"
+rm "$curlcookies"
