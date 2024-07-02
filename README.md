@@ -11,15 +11,16 @@ This code is adapted from [this Stack Exchange answer](https://superuser.com/a/1
 
 # Usage
 ```
-# Fetch google with the cookies from the default profile
-curlfire http://www.google.com/
+# Fetch example with the cookies from the default profile
+curlfire http://www.example.com/
 
-# Fetch google with the cookies from the blah profile
-curlfire -P blah http://www.google.com/
+# Fetch example with the cookies from the blah profile
+curlfire blah http://www.example.com/
+export FF_PROFILE=blah curlfire http://www.example.com/
 
 # Getting cookies
 cookiefire > /tmp/cookies
-curl -b /tmp/cookies http://www.google.com/
+curl -b /tmp/cookies http://www.example.com/
 ```
 
 # Caveats
