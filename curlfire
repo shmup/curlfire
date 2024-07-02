@@ -4,18 +4,12 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-profile=${1:-default}
-curlcookies="$(mktemp /tmp/curlcookies.XXXXXXXXXX)"
-cookiefire $profile >"$curlcookies"
-curl -b "$curlcookies" "$@"
-rm "$curlcookies"
-#!/usr/bin/env bash
+# curl with firefox cookies.sqlite
+# usage: curlfire [profile | env.FF_PROFILE] URL
+#   curlfire foo http://example.com
+#   FF_PROFILE=foo curlfire http://example.com
 
-set -o errexit
-set -o nounset
-set -o pipefail
-
-profile=${1:-${PROFILE:-jtm}}
+profile=${1:-${FF_PROFILE:-default}}
 curlcookies="$(mktemp /tmp/curlcookies.XXXXXXXXXX)"
 cookiefire $profile >"$curlcookies"
 curl -b "$curlcookies" "$@"
